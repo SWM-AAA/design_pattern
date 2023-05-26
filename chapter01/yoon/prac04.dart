@@ -14,6 +14,12 @@ class FlyNoWay implements FlyBehavior {
   }
 }
 
+class FlyWithRocket implements FlyBehavior {
+  void fly() {
+    print("로켓 발사!!!!!!!!!");
+  }
+}
+
 abstract class QuackBehavior {
   void quack();
 }
@@ -108,11 +114,26 @@ class RubberDuck extends Duck {
   }
 }
 
+class SimUDuck extends Duck {
+  SimUDuck()
+      : super(
+          flyBehavior: FlyWithRocket(),
+          quackBehavior: QuackNormalSound(),
+        );
+
+  void display() {
+    print('내이름은 심유덕이야');
+  }
+}
+
 void main() {
-  var duck1 = BlueHeadDuck();
-  var duck2 = RedHeadDuck();
-  var duck3 = WoodDuck();
-  var duck4 = RubberDuck();
+  var duckList = [
+    BlueHeadDuck(),
+    RedHeadDuck(),
+    WoodDuck(),
+    RubberDuck(),
+    SimUDuck(),
+  ];
 
   void doEveryThing(Duck duck) {
     duck.display();
@@ -121,8 +142,7 @@ void main() {
     duck.fly();
   }
 
-  doEveryThing(duck1);
-  doEveryThing(duck2);
-  doEveryThing(duck3);
-  doEveryThing(duck4);
+  duckList.forEach((duck) {
+    doEveryThing(duck);
+  });
 }
