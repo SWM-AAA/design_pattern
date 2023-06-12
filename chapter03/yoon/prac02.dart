@@ -1,8 +1,18 @@
+enum BeverageSize { TALL, GRANDE, VENTI }
+
 abstract class Beverage {
   String description = "이름없음";
-
+  BeverageSize size = BeverageSize.TALL;
   String getDescription() {
-    return description;
+    return '$description(${size.toString().split('.').last})';
+  }
+
+  void setBeverageSize(BeverageSize size) {
+    this.size = size;
+  }
+
+  BeverageSize getBeverageSize() {
+    return size;
   }
 
   int cost();
@@ -68,7 +78,13 @@ class Milk extends CondimentDecorator {
   }
 
   int cost() {
-    return beverage.cost() + 500;
+    if (beverage.getBeverageSize() == BeverageSize.TALL)
+      return beverage.cost() + 300;
+    else if (beverage.getBeverageSize() == BeverageSize.GRANDE)
+      return beverage.cost() + 400;
+    else {
+      return beverage.cost() + 500;
+    }
   }
 }
 
@@ -84,7 +100,13 @@ class Mocha extends CondimentDecorator {
 
   @override
   int cost() {
-    return beverage.cost() + 500;
+    if (beverage.getBeverageSize() == BeverageSize.TALL)
+      return beverage.cost() + 300;
+    else if (beverage.getBeverageSize() == BeverageSize.GRANDE)
+      return beverage.cost() + 400;
+    else {
+      return beverage.cost() + 500;
+    }
   }
 }
 
@@ -132,6 +154,9 @@ void main() {
   ];
 
   coffeList.forEach((element) {
+    if (element is DarkRoast) {
+      element.setBeverageSize(BeverageSize.VENTI);
+    }
     print(element.getDescription());
     print('${element.getDescription()} 가격은 ${element.cost()}원입니다.');
   });
